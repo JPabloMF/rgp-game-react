@@ -59,41 +59,77 @@ const level = [
 ];
 
 class Level1 extends React.Component {
-  levelMatriz = { x: 3, xLimit: 450, y: 5, yLimit: 825 };
+  levelmatrix = { x: 2, xLimit: 450, y: 4, yLimit: 825 };
 
   constructor(props) {
     super(props);
     this.state = {
       positionY: 75,
-      positionX: 75
+      positionX: 75,
+      matrixPositionX: 0,
+      matrixPositionY: 0
     };
   }
 
+  isBlocked = (element) => element.blocked;
+
+  getElementFrommatrix = (matrixPositionX, matrixPositionY) =>
+    level[matrixPositionY][matrixPositionX];
+
   move = ({ keyCode }) => {
-    const { positionY, positionX } = this.state;
+    const {
+      positionY,
+      positionX,
+      matrixPositionY,
+      matrixPositionX
+    } = this.state;
     switch (keyCode) {
       // up W
       case 87:
-        if (positionY - 150 > 0) {
-          this.setState({ positionY: positionY - 150 });
+        if (
+          positionY - 150 > 0 &&
+          !this.isBlocked(this.getElementFrommatrix(matrixPositionX, matrixPositionY - 1))
+        ) {
+          this.setState({
+            positionY: positionY - 150,
+            matrixPositionY: matrixPositionY - 1
+          });
         }
         break;
       // down S
       case 83:
-        if (positionY + 150 < this.levelMatriz.yLimit) {
-          this.setState({ positionY: positionY + 150 });
+        if (
+          positionY + 150 < this.levelmatrix.yLimit &&
+          !this.isBlocked(this.getElementFrommatrix(matrixPositionX, matrixPositionY + 1))
+        ) {
+          this.setState({
+            positionY: positionY + 150,
+            matrixPositionY: matrixPositionY + 1
+          });
         }
         break;
       // left A
       case 65:
-        if (positionX - 150 > 0) {
-          this.setState({ positionX: positionX - 150 });
+        if (
+          positionX - 150 > 0 &&
+          !this.isBlocked(this.getElementFrommatrix(matrixPositionX - 1, matrixPositionY))
+        ) {
+          this.setState({
+            positionX: positionX - 150,
+            matrixPositionX: matrixPositionX - 1
+          });
         }
         break;
       // right D
       case 68:
-        if (positionX + 150 < this.levelMatriz.xLimit) {
-          this.setState({ positionX: positionX + 150 });
+        if (
+          positionX + 150 < this.levelmatrix.xLimit &&
+          !this.isBlocked(this.getElementFrommatrix(matrixPositionX + 1, matrixPositionY))
+        ) {
+          this.setState({
+            positionX: positionX + 150,
+            matrixPositionX: matrixPositionX + 1
+          });
         }
         break;
       default:
