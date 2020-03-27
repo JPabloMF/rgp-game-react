@@ -27,3 +27,5 @@ export const Levels = {
     ]
   ]
 };
+
+export const getTerrainProperties = (type, blocked) => ({ type, blocked });
