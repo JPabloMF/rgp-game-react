@@ -3,19 +3,25 @@ import styled from 'styled-components';
 
 import terrain from '../../assets/textures/terrain.jpg';
 import rock from '../../assets/textures/rock.jpg';
+import chest1 from '../../assets/chest/chest1.png';
 
 const StyledBox = styled.div`
-  width: 150px;
-  height: 150px;
+  border: 1px solid red;
+  width: 100px;
+  height: 100px;
   background-size: contain;
-  background-image: url(${({ type }) =>
-    type === 'terrain' || type === 'character' ? terrain : rock});
+  background-position: center;
+  background-image: url(${({ object }) => (object ? chest1 : null)}),
+    url(${({ type }) =>
+      type === 'terrain' || type === 'character' ? terrain : rock});
+  background-repeat: no-repeat;
   /* border: 1px solid red; */
 `;
 
 class Box extends Component {
   render() {
-    return <StyledBox type={this.props.type} />;
+    const { type, object } = this.props;
+    return <StyledBox type={type} object={object} />;
   }
 }
 
